@@ -3432,6 +3432,11 @@ class Net(object):
             routing_mode = "split"
         return os.getenv("SPYTEST_ROUTING_CONFIG_MODE", routing_mode)
 
+    def _add_swss_copp_config(self, devname, args_str):
+        if not self.wa.is_feature_supported("swss-copp-config", devname):
+            return args_str + " --no-swss-copp-config"
+        return args_str
+
     def _add_config_method(self, devname, args_str):
         load_config_method = self.cfg.load_config_method
         if load_config_method in ["none"]:
@@ -3562,6 +3567,7 @@ class Net(object):
                     if dst_file: dst_file_list.append(dst_file)
             args_str = '"' + '" "'.join(dst_file_list) + '"'
             args_str = args_str + " --apply-file-method " + method
+            args_str = self._add_swss_copp_config(devname, args_str)
             self.dut_log(devname, "Applying config files remotely '{}'".format(args_str))
             skip_error_check = True
         elif option_type == "run-test":
@@ -3582,16 +3588,20 @@ class Net(object):
             routing_mode = self._get_routing_mode(devname)
             if routing_mode != "":
                 args_str = args_str + " --env SPYTEST_ROUTING_CONFIG_MODE " + routing_mode
+            args_str = self._add_swss_copp_config(devname, args_str)
         elif option_type in ["save-base-config", "save-module-config", "reset-intf-naming-mode", "rewrite-ta-config"]:
             execute_in_console = True
             # no arguments are required to create ta config
             args_str = ""
+            args_str = self._add_swss_copp_config(devname, args_str)
         elif option_type in ["apply-init-config"]:
             execute_in_console = True
             args_str = self._add_config_method(devname, "")
+            args_str = self._add_swss_copp_config(devname, args_str)
         elif option_type in ["apply-base-config", "apply-module-config"]:
             execute_in_console = True
             args_str = self._add_config_method(devname, "")
+            args_str = self._add_swss_copp_config(devname, args_str)
             skip_error_check = True
         elif option_type == "disable-debug":
             # no arguments are required to disabling debug messages on to console

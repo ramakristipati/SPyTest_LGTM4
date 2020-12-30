@@ -1312,10 +1312,10 @@ class ScapyPacket(object):
     def exabgpd_stop_all(self):
         self.os_system("ps -ef")
         for pidfile in self.utils.list_files(self.logger.logs_dir, "exabgpd_*.pid"):
+            self.logger.info(self.utils.cat_file(pidfile))
             cmd = "pkill -F {}".format(pidfile)
-            print(cmd)
             out = self.os_system(cmd)
-            print(out)
+            self.logger.info(out)
 
     def exabgpd_stop(self, ns):
         logfile = self.exabgpd_file(ns, "log")

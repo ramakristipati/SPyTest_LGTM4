@@ -16,6 +16,7 @@ import utilities.parallel as pll
 import apis.system.basic as basic_api
 import apis.system.reboot as reboot_api
 import apis.routing.bgp as bgp_api
+import apis.system.port as port_api
 from udld_vars import *
 
 import utilities.common as utils
@@ -966,6 +967,8 @@ def test_rpvst_udld_normal_aggressive():
     reboot_api.config_reload(dut3)
     udld.check_udld_status_after_restart(dut3)
     st.wait(15)
+    print_log("Display the port status after Config Reload in Normal Mode...", 'MED')
+    port_api.get_status(dut3)
     if verify_udld_neighbor_norm(udld_neighbor):
         print_log("UDLD neighbor in normal mode after config reload verification PASSED", "HIGH")
     else:
@@ -992,6 +995,8 @@ def test_rpvst_udld_normal_aggressive():
     st.reboot(dut3,"fast")
     udld.check_udld_status_after_restart(dut3)
     st.wait(15)
+    print_log("Display the port status after Fast Reboot in Normal Mode...", 'MED')
+    port_api.get_status(dut3)
     if verify_udld_neighbor_norm(udld_neighbor):
         print_log("UDLD neighbor in normal mode after fast reboot verification PASSED", "HIGH")
     else:
@@ -1019,6 +1024,8 @@ def test_rpvst_udld_normal_aggressive():
     udld.check_udld_status_after_restart(dut3)
 
     st.wait(15)
+    print_log("Display the port status after Cold Reboot in Normal Mode...", 'MED')
+    port_api.get_status(dut3)
     if verify_udld_neighbor_norm(udld_neighbor):
         print_log("UDLD neighbor in normal mode after cold reboot verification PASSED", "HIGH")
     else:
@@ -1075,6 +1082,8 @@ def test_rpvst_udld_normal_aggressive():
     print_log("Do docker udld restart in Normal Mode...", 'MED')
     basic_api.service_operations_by_systemctl(dut3,"udld","restart")
     st.wait(15)
+    print_log("Display the port status after Docker Restart in Normal Mode...", 'MED')
+    port_api.get_status(dut3)
     if verify_udld_neighbor(udld_neighbor):
         print_log("UDLD neighbor in normal mode after docker restart verification PASSED", "HIGH")
     else:
@@ -1182,6 +1191,8 @@ def test_rpvst_udld_normal_aggressive():
     reboot_api.config_reload(dut3)
     udld.check_udld_status_after_restart(dut3)
     st.wait(15)
+    print_log("Display the port status after Config Reload in Aggressive Mode...", 'MED')
+    port_api.get_status(dut3)
     if verify_udld_neighbor_norm(udld_neighbor):
         print_log("UDLD neighbor in aggressive mode after config reload verification PASSED", "HIGH")
     else:
@@ -1208,6 +1219,8 @@ def test_rpvst_udld_normal_aggressive():
     st.reboot(dut3,"fast")
     udld.check_udld_status_after_restart(dut3)
     st.wait(15)
+    print_log("Display the port status after Fast Reboot in Aggressive Mode...", 'MED')
+    port_api.get_status(dut3)
     if verify_udld_neighbor_norm(udld_neighbor):
         print_log("UDLD neighbor in aggressive mode after fast reboot verification PASSED", "HIGH")
     else:
@@ -1234,6 +1247,8 @@ def test_rpvst_udld_normal_aggressive():
     st.reboot(dut3)
     udld.check_udld_status_after_restart(dut3)
     st.wait(15)
+    print_log("Display the port status after Cold Reboot in Aggressive Mode...", 'MED')
+    port_api.get_status(dut3)
     if verify_udld_neighbor_norm(udld_neighbor):
         print_log("UDLD neighbor in aggressive mode after cold reboot verification PASSED", "HIGH")
     else:
@@ -1291,6 +1306,8 @@ def test_rpvst_udld_normal_aggressive():
     print_log("Do docker udld restart in Aggressive Mode...", 'MED')
     basic_api.service_operations_by_systemctl(dut3,"udld","restart")
     st.wait(15)
+    print_log("Display the port status after Docker Restart in Aggressive Mode...", 'MED')
+    port_api.get_status(dut3)
     if verify_udld_neighbor(udld_neighbor):
         print_log("UDLD neighbor in aggressive mode after docker restart verification PASSED", "HIGH")
     else:

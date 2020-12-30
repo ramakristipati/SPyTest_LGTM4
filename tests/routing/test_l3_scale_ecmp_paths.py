@@ -527,9 +527,9 @@ def l3_max_route_max_path_scaling_tc(max_paths, max_routes, use_config_file, fam
         st.wait(10)
 
         def f1(d):
-            st.config(d, "show bgp ipv4 summary")
-            st.config(d, "show interface status")
-            st.config(d, "show ip route | head -1000")
+            st.show(d, "show bgp ipv4 summary", type='vtysh')
+            st.show(d, "show interface status")
+            st.show(d, "show ip route | head -1000")
             arp_obj.show_arp(d)
 
         st.banner("ARP entries before traffic is initiated on Dut1 and Dut2")
@@ -566,10 +566,10 @@ def l3_max_route_max_path_scaling_tc(max_paths, max_routes, use_config_file, fam
         tg2.tg_emulation_bgp_control(handle=bgp_conf['handle'], mode='start')
 
         def f1(d):
-            st.config(d, "show run bgp")
-            st.config(d, "show ndp")
-            st.config(d, "show bgp ipv6 summary")
-            st.config(d, "show ipv6 route | head -1000")
+            st.show(d, "show run bgp")
+            st.show(d, "show ndp")
+            st.show(d, "show bgp ipv6 summary", type='vtysh')
+            st.show(d, "show ipv6 route | head -1000")
             arp_obj.show_arp(d)
         st.banner("ARP entries before traffic is initiated on Dut1 and Dut2")
         st.exec_each([dut, dut2], f1)

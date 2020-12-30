@@ -51,7 +51,8 @@ feature_names = [
     "nat-default-enabled",
     "sflow-default-enabled",
     "ip_vrf_exec_mgmt_ntpstat",
-    "remove_qos_profile"
+    "remove_qos_profile",
+    "swss-copp-config",
 ]
 
 class Feature(object):
@@ -104,6 +105,7 @@ class Feature(object):
         self.set_supported("config-ipv6-command")
         self.set_supported("show-mac-count-command")
         self.set_supported("show-interfaces-counters-detailed-command")
+        self.set_supported("swss-copp-config")
 
     def init_broadcom(self):
         self.set_supported(feature_names)
